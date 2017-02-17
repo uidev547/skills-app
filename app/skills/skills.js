@@ -30,7 +30,6 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 	//hide form
 	$scope.hide = function(){
 		$scope.addFormShow = false;
-		//$scope.contactShow = false;
 	};
 
 	$scope.updateSkills = function(result){
@@ -49,8 +48,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 			$scope.id = ref.key;
 			console.log($scope.id);
 			//clear form
-			alert("your message is sent successfully");
-			$scope.clearFields();
+			$scope.msg = "your message is sent successfully";
 			//hide form
 			$scope.addFormShow = false;
 		});
@@ -62,6 +60,9 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		$scope.skills = $firebaseArray(rootRef.child('categoryList').child($scope.selectedCategory));
 		$scope.ratings = $firebaseArray(rootRef.child('Rating'));
 		console.log($scope.ratings);
+	}
+	$scope.addNewSkill = function(){
+		console.log($scope.skills);
 	}
 
 
