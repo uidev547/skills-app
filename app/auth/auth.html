@@ -1,0 +1,21 @@
+<div class="auth-section">
+	<div ng-If="userService.status === 'loading'">
+		Loading....
+	</div>
+	<div ng-If="userService.status === 'loggedin'">
+		<div ng-if="userService.userDomain === 'imaginea'">
+			<h1>Hi {{userService.user.displayName}}</h1>
+			<a href="#" class="btn btn-danger waves-effect" ng-click="userService.logout($event)">Logout</a>
+		</div>
+		<div ng-if="userService.userDomain !== 'imaginea'">
+			<h1>Hi {{userService.user.displayName}}, Currently this is exclusive for imaginea.com</h1>
+			<a href="#" class="btn btn-danger waves-effect" ng-click="userService.logout($event)">Logout</a>
+		</div>
+	</div>
+	<div ng-If="userService.status === 'loggedout'">
+		<h1>Please login to continue..</h1>
+		<a class="btn btn-warning waves-effect" href="#" ng-click="userService.login($event)">Login with Google ( imaginea.com )</a>
+	</div>
+</div>
+
+
