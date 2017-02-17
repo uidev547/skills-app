@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="mySkills">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- css file -->
+  <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../bower_components/bootstrap-material-design/dist/css/material.min.css">
+  <link href="../bower_components/bootstrap-material-design/dist/css/roboto.min.css" rel="stylesheet">
+  <link href="../bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="app.css">
+ <!--  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+  <script type="text/javascript">
+    var config = {
+      apiKey: "AIzaSyBj6JQeT8f8pFHsjfccrxDiaOv7PmE6PBM",
+      authDomain: "testp-9a6b7.firebaseapp.com",
+      databaseURL: "https://testp-9a6b7.firebaseio.com",
+      storageBucket: "testp-9a6b7.appspot.com",
+      messagingSenderId: "744940249573"
+    };
+  firebase.initializeApp(config);
+  var rootRef = firebase.database().ref();
+  </script> -->
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAck-yVROjMtoMQGT6jnRA0kflrCrzDfFc",
+      authDomain: "skills-c4f93.firebaseapp.com",
+      databaseURL: "https://skills-c4f93.firebaseio.com",
+      storageBucket: "skills-c4f93.appspot.com",
+      messagingSenderId: "200368377017"
+    };
+    firebase.initializeApp(config);
+    var rootRef = firebase.database().ref();
+  </script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand waves-effect waves-light" href="#">Skills Rating</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container" id="mainContent">
+    <div ng-view></div>
+  </div>
+  <!-- /.container -->
+
+  <!-- script file -->
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="../bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="../bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+  <script src="../bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+  <script src="../bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+  <script src="app.js"></script>
+  <script src="skills/skills.js"></script>
+  <script src="../bower_components/angularfire/dist/angularfire.min.js"></script>
+  <script>
+    $(document).ready(function(){
+        $.material.init();
+    });
+  </script>
+
+
+</body>
+
+</html>

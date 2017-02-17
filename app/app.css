@@ -1,0 +1,32 @@
+/* app css stylesheet */
+body {
+  padding: 5px;
+  background: #fafafa;
+  font-family: 'Roboto','Helvetica','Arial',sans-serif;
+}
+#mainContent{
+  margin-top: 107px;
+}
+.panel{
+  background: #f9f9f9;
+  border: #ccc 1px solid;
+}
+ul, li{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+li{
+  line-height: 1.8em;
+}
+h5{
+  margin: 10px,0;
+  padding: 5px,0;
+  background: #f4f4f4;
+  padding:10px;
+}
+
+table label{
+  //margin-left: 10px; 
+}
+

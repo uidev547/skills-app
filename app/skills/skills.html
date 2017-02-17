@@ -1,0 +1,52 @@
+<div class="row" ng-controller="SkillsCtrl">
+	<div class="large-10 columns">
+		<div data-alert ng-show="msg" class="alert-box">{{msg}}</div>
+	</div>
+	<!-- show -->
+	<form ng-submit="updateSkills(result)" novalidate>
+		<div class="large-10 columns">
+			<label>Category : </label>
+			<select ng-model="selectedCategory" ng-change="selectedSkills()">
+				<option value="" disabled selected>Choose your option</option>
+				<option ng-repeat="category in categories"  value="{{category.$value}}">{{category.$value}}</option>
+			</select>
+			<!-- <h1>You selected: {{selectedCategory}} </h1> -->
+		</div>
+		<div class="container">
+		  <table class="table table-bordered table-hover " ng-if="selectedCategory">
+		    <thead>
+		      <tr>
+		        <th width="25%">Skills</th>
+		        <th>Rating</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="skill in skills">
+		        <td>{{skill.$value}}</td>
+		        <td><label ng-repeat="rating in ratings"><input ng-model="result[skill.$value]" type="radio" ng-value="{{rating.$id}}" name={{skill.$value}}>{{rating.$value}}</label>
+		        </td>
+		      </tr>
+		    </tbody>
+		  </table>
+		</div>
+		
+		<div class="row" ng-show="addFormShow">
+			<div class="large-6 columns">
+				<label for="name">skill:</label>
+				<input ng-model="name" type="text" placeholder="skill" required />
+				<input type="button" value="Add" class="button" />				
+			</div>
+		</div>
+		
+		<div class="small-12 large-2 columns" ng-if="selectedCategory">
+			<a ng-click="showAddForm()" ng-hide="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">add</i></a>
+			<a ng-click="hide()" ng-show="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">remove</i></a>
+		</div>
+		<div class="small-12 large-2 columns" ng-if="selectedCategory">
+			<button class="btn btn-primary waves-effect waves-light" type="submit" name="action">Submit
+	  		</button>
+		</div>
+	</form>
+</div>
+
+
