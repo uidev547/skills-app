@@ -20,6 +20,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 
 	if(!UserService.user || UserService.userDomain !== 'imaginea') {
 		$location.path('auth');
+		return;
 	}
 
 	//show add form
@@ -32,25 +33,32 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		$scope.addFormShow = false;
 		//$scope.contactShow = false;
 	};
-
+	$scope.users.$loaded().then(function(){
+		var key = appUtils.getEmailKey(UserService.user.email);
+		var data = $scope.users.$getRecord(key) || {};
+		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
+	});
+	
 	$scope.updateSkills = function(result){
 		console.log("updating skills...");
 		console.log($scope.selectedCategory);
 		console.log($scope.result);
 		//get id
-		$scope.tempObj = {};
-		$scope.tempObj[$scope.selectedCategory] = $scope.result;
-		$scope.users.$add({
+		var tempObj = {};
+		tempObj[$scope.selectedCategory] = $scope.result;
+		var obj = {
 			id: UserService.user.email,
 			displayName:UserService.user.displayName,
-			tech: $scope.tempObj
-
-		}).then(function(ref){
-			$scope.id = ref.key;
-			console.log($scope.id);
+			tech: tempObj
+		};
+		var key = appUtils.getEmailKey(obj.id);
+		rootRef.child('Users/' + key).set(obj)
+		.then(function(ref){
+			//$scope.id = ref.key;
+			//console.log($scope.id);
 			//clear form
 			alert("your message is sent successfully");
-			$scope.clearFields();
+			//$scope.clearFields();
 			//hide form
 			$scope.addFormShow = false;
 		});
@@ -62,6 +70,11 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		$scope.skills = $firebaseArray(rootRef.child('categoryList').child($scope.selectedCategory));
 		$scope.ratings = $firebaseArray(rootRef.child('Rating'));
 		console.log($scope.ratings);
+
+
+		var key = appUtils.getEmailKey(UserService.user.email);
+		var data = $scope.users.$getRecord(key) || {};
+		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
 	}
 
 

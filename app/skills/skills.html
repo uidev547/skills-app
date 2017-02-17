@@ -23,7 +23,9 @@
 		    <tbody>
 		      <tr ng-repeat="skill in skills">
 		        <td>{{skill.$value}}</td>
-		        <td><label ng-repeat="rating in ratings"><input ng-model="result[skill.$value]" type="radio" ng-value="{{rating.$id}}" name={{skill.$value}}>{{rating.$value}}</label>
+		        <td><label ng-repeat="rating in ratings">
+								<input ng-model="result[skill.$value]" type="radio" ng-value="{{rating.$id}}" name={{skill.$value}}>{{rating.$value}}
+						</label>
 		        </td>
 		      </tr>
 		    </tbody>

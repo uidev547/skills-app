@@ -10,3 +10,10 @@ angular.module('mySkills', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/skills'});
 }]);
+
+
+var appUtils = {
+  getEmailKey: function(key) {
+    return key.replace(/[^\w\s]/gi, '_');
+  }
+}
