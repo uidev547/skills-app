@@ -30,9 +30,24 @@ table label{
   //margin-left: 10px; 
 }
 
-
-
-
 .auth-section {
   text-align: center;
+}
+
+input[type=text] {
+    width: 23%;
+    padding: 8px 12px;
+    margin: 10px 3px;
+    box-sizing: border-box;
+}
+.drpdwn {
+    padding: 7px;
+    margin: 0 0px 10px 5px;
+    border-radius: 5px;
+    background: #fff;
+}
+.radio-label {
+    padding: 5px;
+    font-style: italic;
+    font-weight: normal;
 }

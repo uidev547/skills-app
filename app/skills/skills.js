@@ -68,7 +68,12 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
 	}
 	$scope.addNewSkill = function(){
-		console.log($scope.skills);
+		if($scope.newSkill){
+			rootRef.child('categoryList/'+ $scope.selectedCategory + '/').push($scope.newSkill)
+			.then(function(ref){ });	
+		}
+		$scope.newSkill = null;
+
 	}
 
 
