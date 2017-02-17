@@ -4,6 +4,7 @@
 angular.module('mySkills', [
   'ngRoute',
   'mySkills.skills',
+  'mySkills.auth',
   'firebase'
 ]).
 config(['$routeProvider', function($routeProvider) {

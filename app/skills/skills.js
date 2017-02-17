@@ -10,12 +10,17 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 }])
 
 //skills controller
-.controller('SkillsCtrl', ['$scope','$firebaseArray',function($scope,$firebaseArray) {
+.controller('SkillsCtrl', ['$scope','$firebaseArray', 'UserService', '$location',
+ function($scope,$firebaseArray, UserService, $location) {
 	//init firebase
 	//get skills
 	$scope.result = {};
 	$scope.users = $firebaseArray(rootRef.child('Users'));
 	$scope.categories = $firebaseArray(rootRef.child('category'));
+
+	if(!UserService.user || UserService.userDomain !== 'imaginea') {
+		$location.path('auth');
+	}
 
 	//show add form
 	$scope.showAddForm = function(){
@@ -36,9 +41,8 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		$scope.tempObj = {};
 		$scope.tempObj[$scope.selectedCategory] = $scope.result;
 		$scope.users.$add({
-
-			id:"ashish.singh@imaginea.com",
-			displayName:"Ashish",
+			id: UserService.user.email,
+			displayName:UserService.user.displayName,
 			tech: $scope.tempObj
 
 		}).then(function(ref){
