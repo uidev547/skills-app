@@ -44,13 +44,13 @@
 			<div class="col-sm-12 columns">
 				<label for="newSkill" class="control-label">Skill:</label>
 				<input ng-model="newSkill" type="text" placeholder="add new skill" required />
-				<a href="javascript:void(0)" class="btn btn-raised btn-success" ng-click="addNewSkill()">Add</a>
+				<a href="javascript:void(0)" class="btn btn-raised btn-success btn-sm" ng-click="addNewSkill()">Add</a>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-12 columns" ng-if="selectedCategory">
-				<a ng-click="showAddForm()" ng-hide="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">add</i></a>
-				<a ng-click="hide()" ng-show="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">remove</i></a>
+				<a ng-click="showAddForm()" ng-hide="addFormShow" class="btn .btn-group-sm btn-warning btn-fab"><i class="material-icons">add</i></a>
+				<a ng-click="hide()" ng-show="addFormShow" class="btn btn-warning btn-fab"><i class="material-icons">remove</i></a>
 			</div>
 		</div>
 		<div class="row">
