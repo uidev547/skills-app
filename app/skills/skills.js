@@ -44,7 +44,10 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		var key = appUtils.getEmailKey(UserService.user.email);
 		var data = $scope.users.$getRecord(key) || {};
 		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
-		$scope.showBtn = true;
+		if(data.tech){
+			$scope.showBtn = true;
+		}
+		
 	});
 	
 	$scope.updateSkills = function(result){
