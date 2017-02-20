@@ -26,7 +26,7 @@ angular.module('mySkills.auth', ['ngRoute','firebase'])
 		  data.user = user;
 		  if( data.user.email.indexOf('@imaginea.com') !== -1 ) {
 			  data.userDomain = 'imaginea';
-			  $location.path( "/skills" );
+			  //$location.path( "/skills" );
 		  }
 		  
 

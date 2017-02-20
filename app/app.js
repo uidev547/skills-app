@@ -5,10 +5,12 @@ angular.module('mySkills', [
   'ngRoute',
   'mySkills.skills',
   'mySkills.auth',
-  'firebase'
+  'mySkills.report',
+  'firebase',
+  'chart.js'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/skills'});
+  $routeProvider.otherwise({redirectTo: '/report'});
 }]);
 
 
