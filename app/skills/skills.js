@@ -53,10 +53,20 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 			tech: tempObj
 		};
 		var key = appUtils.getEmailKey(obj.id);
-		rootRef.child('Users/' + key).set(obj).then(function(ref){
-			//hide form
-			$scope.addFormShow = false;
-		});
+		var data = $scope.users.$getRecord(key) || {};
+		if(angular.equals(data, {})){
+			rootRef.child('Users/' + key).set(obj).then(function(ref){
+				//hide form
+				$scope.addFormShow = false;
+			});
+		}
+		else{
+			console.log("update");
+			rootRef.child('Users/'+ key + '/tech/' + $scope.selectedCategory).set($scope.result).then(function(ref){
+				//hide form
+				$scope.addFormShow = false;
+			});
+		}
 		$scope.msg = "your data updated successfully";
 		$scope.showMsg = true;
 	};
