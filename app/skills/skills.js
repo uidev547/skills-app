@@ -80,6 +80,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 	};
 
 	$scope.selectedSkills = function(){
+		$scope.showMsg = false;
 		$scope.msg = null;
 		$scope.addFormShow = false;
 		$scope.skills = $firebaseArray(rootRef.child('categoryList').child($scope.selectedCategory));
@@ -98,6 +99,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 	}
 
 	$scope.showReport = function(){
+		$scope.showMsg = false;
 		$scope.feedData = true;
 		var key = appUtils.getEmailKey(UserService.user.email);
 		var data = $scope.users.$getRecord(key) || {};
