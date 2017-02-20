@@ -13,6 +13,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 .controller('SkillsCtrl', ['$scope','$firebaseArray', 'UserService', '$location',
  function($scope,$firebaseArray, UserService, $location) {
 	//init variable
+	$scope.showMsg = false;
 	$scope.msg = null;
 	$scope.result = {};
 	$scope.users = $firebaseArray(rootRef.child('Users'));
@@ -31,7 +32,10 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 	//hide form
 	$scope.hide = function(){
 		$scope.addFormShow = false;
+		$scope.showMsg = false;
 	};
+
+	//load user data 
 	$scope.users.$loaded().then(function(){
 		var key = appUtils.getEmailKey(UserService.user.email);
 		var data = $scope.users.$getRecord(key) || {};
@@ -50,31 +54,29 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		};
 		var key = appUtils.getEmailKey(obj.id);
 		rootRef.child('Users/' + key).set(obj).then(function(ref){
-			console.log("reurtn");
-			$scope.msg = "your data updated successfully";
-			console.log($scope.msg);
 			//hide form
 			$scope.addFormShow = false;
 		});
-
+		$scope.msg = "your data updated successfully";
+		$scope.showMsg = true;
 	};
 
 	$scope.selectedSkills = function(){
 		$scope.msg = null;
+		$scope.addFormShow = false;
 		$scope.skills = $firebaseArray(rootRef.child('categoryList').child($scope.selectedCategory));
 		$scope.ratings = $firebaseArray(rootRef.child('Rating'));
 		var key = appUtils.getEmailKey(UserService.user.email);
 		var data = $scope.users.$getRecord(key) || {};
 		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
 	}
+
 	$scope.addNewSkill = function(){
 		if($scope.newSkill){
 			rootRef.child('categoryList/'+ $scope.selectedCategory + '/').push($scope.newSkill)
 			.then(function(ref){ });	
 		}
 		$scope.newSkill = null;
-
 	}
-
 
 }]);

@@ -1,6 +1,6 @@
 <div class="row" ng-controller="SkillsCtrl">
-	<div class="alert alert-success alert-dismissible fade in" role="alert" ng-if="msg">
-	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	<div class="alert alert-success alert-dismissible fade in" role="alert" ng-if="showMsg">
+	  <button type="button" class="close" ng-click="hide()" aria-label="Close">
 	    <span aria-hidden="true">&times;</span>
 	  </button>
 	  <strong>{{msg}}</strong> 
@@ -38,8 +38,8 @@
 		<div class="row form-group label-floating" ng-show="addFormShow">
 			<div class="large-6 columns">
 				<label for="newSkill" class="control-label">skill:</label>
-				<input ng-model="newSkill" type="text" placeholder="skill" required />
-				<a href="javascript:void(0)" class="btn btn-raised btn-success" ng-click="addNewSkill()">Add</a>			 -->
+				<input ng-model="newSkill" type="text" placeholder="type new skill" required />
+				<a href="javascript:void(0)" class="btn btn-raised btn-success" ng-click="addNewSkill()">Add</a>
 			</div>
 		</div>
 		
@@ -47,7 +47,7 @@
 			<a ng-click="showAddForm()" ng-hide="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">add</i></a>
 			<a ng-click="hide()" ng-show="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">remove</i></a>
 		</div>
-		<div class="small-12 large-2 columns" ng-if="selectedCategory">
+		<div class="small-12 large-2 columns submit-btn" ng-if="selectedCategory">
 			<button class="btn btn-primary waves-effect waves-light" type="submit" name="action">Submit
 	  		</button>
 		</div>
