@@ -13,6 +13,9 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 .controller('SkillsCtrl', ['$scope','$firebaseArray', 'UserService', '$location',
  function($scope,$firebaseArray, UserService, $location) {
 	//init variable
+	$scope.showBtn = false;
+	$scope.userSkills = null;
+	$scope.feedData = false;
 	$scope.showMsg = false;
 	$scope.msg = null;
 	$scope.result = {};
@@ -33,6 +36,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 	$scope.hide = function(){
 		$scope.addFormShow = false;
 		$scope.showMsg = false;
+		$scope.newSkill = null;
 	};
 
 	//load user data 
@@ -40,6 +44,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		var key = appUtils.getEmailKey(UserService.user.email);
 		var data = $scope.users.$getRecord(key) || {};
 		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
+		$scope.showBtn = true;
 	});
 	
 	$scope.updateSkills = function(result){
@@ -87,6 +92,14 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 			.then(function(ref){ });	
 		}
 		$scope.newSkill = null;
+	}
+
+	$scope.showReport = function(){
+		$scope.feedData = true;
+		var key = appUtils.getEmailKey(UserService.user.email);
+		var data = $scope.users.$getRecord(key) || {};
+		$scope.userSkills = data.tech;
+		$scope.ratings = $firebaseArray(rootRef.child('Rating'));
 	}
 
 }]);

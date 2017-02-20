@@ -6,17 +6,22 @@
 	  <strong>{{msg}}</strong> 
 	</div>
 	<!-- show -->
-	<form ng-submit="updateSkills(result)" novalidate>
-		<div class="large-10 columns">
-			<label>Category : </label>
-			<select ng-model="selectedCategory" ng-change="selectedSkills()" class="drpdwn">
-				<option value="" disabled selected>Choose your option</option>
-				<option ng-repeat="category in categories"  value="{{category.$value}}">{{category.$value}}</option>
-			</select>
-			<!-- <h1>You selected: {{selectedCategory}} </h1> -->
+	<form ng-submit="updateSkills(result)" ng-hide="feedData" novalidate>
+		<div class="row">
+			<div class="col-sm-10 columns">
+				<label>Category : </label>
+				<select ng-model="selectedCategory" ng-change="selectedSkills()" class="drpdwn">
+					<option value="" disabled selected>Choose your option</option>
+					<option ng-repeat="category in categories"  value="{{category.$value}}">{{category.$value}}</option>
+				</select>
+				<!-- <h1>You selected: {{selectedCategory}} </h1> -->
+			</div>
+			<div class="col-sm-2 columns" ng-show="showBtn">
+				<a ng-click="showReport()" class="btn btn-info btn-sm">Report</a>
+			</div>	
 		</div>
-		<div class="container">
-		  <table class="table table-bordered table-hover " ng-if="selectedCategory">
+		<div class="container well nav-base" ng-if="selectedCategory"> 
+		  <table class="table table-bordered table-hover">
 		    <thead>
 		      <tr>
 		        <th width="25%">Skills</th>
@@ -36,22 +41,47 @@
 		</div>
 		
 		<div class="row form-group label-floating" ng-show="addFormShow">
-			<div class="large-6 columns">
-				<label for="newSkill" class="control-label">skill:</label>
-				<input ng-model="newSkill" type="text" placeholder="type new skill" required />
+			<div class="col-sm-12 columns">
+				<label for="newSkill" class="control-label">Skill:</label>
+				<input ng-model="newSkill" type="text" placeholder="add new skill" required />
 				<a href="javascript:void(0)" class="btn btn-raised btn-success" ng-click="addNewSkill()">Add</a>
 			</div>
 		</div>
-		
-		<div class="small-12 large-2 columns" ng-if="selectedCategory">
-			<a ng-click="showAddForm()" ng-hide="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">add</i></a>
-			<a ng-click="hide()" ng-show="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">remove</i></a>
+		<div class="row">
+			<div class="col-sm-12 columns" ng-if="selectedCategory">
+				<a ng-click="showAddForm()" ng-hide="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">add</i></a>
+				<a ng-click="hide()" ng-show="addFormShow" class="btn btn-default btn-fab"><i class="material-icons">remove</i></a>
+			</div>
 		</div>
-		<div class="small-12 large-2 columns submit-btn" ng-if="selectedCategory">
-			<button class="btn btn-primary waves-effect waves-light" type="submit" name="action">Submit
-	  		</button>
+		<div class="row">
+			<div class="col-sm-12 columns submit-btn" ng-if="selectedCategory">
+				<button class="btn btn-primary waves-effect waves-light" type="submit" name="action">Submit
+		  		</button>
+			</div>
 		</div>
 	</form>
+
+	<div ng-show="feedData">
+		<div class="container">
+			<div ng-repeat="(key, data) in userSkills">
+				<h2>{{key}}</h2>
+				<table class="table table-bordered table-hover report-table">
+				    <thead>
+				      <tr>
+				        <th width="25%">Skills</th>
+				        <th width="25%">Rating</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr ng-repeat="(key, val) in data">
+				        <td>{{key}}</td>
+				        <td>{{ratings[val].$value}}</td>
+				      </tr>
+				    </tbody>
+				</table>
+			</div> 
+		</div>
+	</div>
 </div>
 
 

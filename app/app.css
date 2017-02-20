@@ -60,3 +60,6 @@ input[type=text] {
 .submit-btn {
   margin-top: 10px; 
 }
+.report-table {
+  width: 50%;
+}
