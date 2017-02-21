@@ -72,10 +72,12 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 			rootRef.child('Users/'+ key + '/tech/' + $scope.selectedCategory).set($scope.result).then(function(ref){
 				//hide form
 				$scope.addFormShow = false;
+				$scope.msg = "Your data updated successfully";
+				$scope.showMsg = true;
+				$scope.$apply();
 			});
 		}
-		$scope.msg = "your data updated successfully";
-		$scope.showMsg = true;
+		
 	};
 
 	$scope.selectedSkills = function(){
@@ -87,6 +89,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		var key = appUtils.getEmailKey(UserService.user.email);
 		var data = $scope.users.$getRecord(key) || {};
 		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
+
 	}
 
 	$scope.addNewSkill = function(){
@@ -104,6 +107,9 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		var data = $scope.users.$getRecord(key) || {};
 		$scope.userSkills = data.tech;
 		$scope.ratings = $firebaseArray(rootRef.child('Rating'));
+		$scope.reportCategory = $scope.selectedCategory;
 	}
+
+
 
 }]);
