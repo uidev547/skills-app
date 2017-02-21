@@ -69,7 +69,6 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 			});
 		}
 		else{
-			console.log("update");
 			rootRef.child('Users/'+ key + '/tech/' + $scope.selectedCategory).set($scope.result).then(function(ref){
 				//hide form
 				$scope.addFormShow = false;
