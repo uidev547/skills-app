@@ -1,28 +1,34 @@
-<div>
+<div class="reports-wrapper">
 	<div class="row">
 		<div class="col-sm-4">
-			<select class="form-control">
-				<option>UI</option>
-				<option>Backend</option>
+			<select class="form-control" ng-model="selectedCat" ng-change="optionsChanged( 'category' )">
+				<option value="{{item}}" ng-repeat="item in categories track by $index">{{item}}</option>
 			</select>
 		</div>
 		<div class="col-sm-4">
-			<select class="form-control">
-				<option>Javascript</option>
-				<option>Angularjs</option>
+			<select class="form-control" ng-model="selectedSkill" ng-change="optionsChanged( 'skill' )">
+				<option value="{{item}}" ng-repeat="item in skills track by $index">{{item}}</option>
 			</select>
 		</div>
 		<div class="col-sm-4">
-			<select class="form-control">
-				<option>Expert</option>
-				<option>Intermediate</option>
+			<select class="form-control" ng-model="selectedRate" ng-change="optionsChanged( 'rating' )">
+				<option value="{{item}}" ng-repeat="item in ratings track by $index">{{item}}</option>
 			</select>
 		</div>
 	</div>
-	<canvas id="line" class="chart chart-line" chart-data="data"
-		chart-labels="labels" chart-series="series" chart-options="options"
-		chart-dataset-override="datasetOverride" chart-click="onClick">
-	</canvas>
+	<div class="jumbotron">
+		<div class="chart-wrapper">
+			<canvas id="line" class="chart chart-line" chart-data="data"
+				chart-labels="labels" 
+				chart-series="series" 
+				chart-options="options"
+				chart-dataset-override="datasetOverride"
+				height="250"
+				width="500" 
+				chart-click="onClick">
+			</canvas>
+		</div>
+	</div>
 </div>
 
 
