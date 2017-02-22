@@ -89,4 +89,4 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		$scope.newSkill = null;
 	}
 
-}]);
+}])

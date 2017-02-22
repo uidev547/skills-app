@@ -6,8 +6,7 @@ angular.module('mySkills', [
   'mySkills.skills',
   'mySkills.auth',
   'mySkills.report',
-  'firebase',
-  'chart.js'
+  'firebase'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/report'});

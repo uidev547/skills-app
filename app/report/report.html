@@ -6,7 +6,7 @@
 			</select>
 		</div>
 		<div class="col-sm-4">
-			<select class="form-control" ng-model="selectedSkill" ng-change="optionsChanged( 'skill' )">
+			<select class="form-control" ng-model="selectedOptionSkill" ng-change="optionsChanged( 'skill' )">
 				<option value="{{item}}" ng-repeat="item in skills track by $index">{{item}}</option>
 			</select>
 		</div>
@@ -18,15 +18,15 @@
 	</div>
 	<div class="jumbotron">
 		<div class="chart-wrapper">
-			<canvas id="line" class="chart chart-line" chart-data="data"
-				chart-labels="labels" 
-				chart-series="series" 
-				chart-options="options"
-				chart-dataset-override="datasetOverride"
-				height="250"
-				width="500" 
-				chart-click="onClick">
-			</canvas>
+			<div ng-if="options">
+				<div skills-highcharts options="options"></div>
+				<div id="container"></div>
+			</div>
+		</div>
+	</div>
+	<div class="page-loader" ng-if="pageStatus ==='loading'">
+		<div id="escapingBallG">
+			<div id="escapingBall_1" class="escapingBallG"></div>
 		</div>
 	</div>
 </div>

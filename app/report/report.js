@@ -9,11 +9,13 @@ angular.module('mySkills.report', ['ngRoute','firebase'])
 }])
 
 //skills controller
-.controller('ReportCtrl', ['$scope', '$firebaseArray', '$firebaseObject', function($scope, $firebaseArray, $firebaseObject) {
+.controller('ReportCtrl', ['$scope', '$firebaseArray', '$firebaseObject', '$timeout',
+ function($scope, $firebaseArray, $firebaseObject, $timeout) {
 	var users = $firebaseArray(rootRef.child('Users'));
 	var categories = $firebaseArray(rootRef.child('category'));
 	var categoryList = $firebaseObject(rootRef.child('categoryList'));
 	var ratings = $firebaseArray(rootRef.child('Rating'));
+	$scope.pageStatus = 'loading';
 
 	users.$loaded().then(function(){
 		$scope.users = users;
@@ -34,11 +36,13 @@ angular.module('mySkills.report', ['ngRoute','firebase'])
 
 	var updateSkillsList = function() {
 		counter++;
-		if( counter===2 ) {
+		if( counter===3 ) {
 			$scope.selectedCat = $scope.categories[0];
 			$scope.skills = Object.values($scope.categoryList[ $scope.selectedCat ]);
 			$scope.skills.unshift('All');	
-			$scope.selectedSkill = $scope.skills[0];
+			$scope.selectedOptionSkill = $scope.skills[0];
+			updateResult();
+			$scope.pageStatus = 'loaded';
 		}
 	};
 
@@ -48,7 +52,7 @@ angular.module('mySkills.report', ['ngRoute','firebase'])
 				$scope.skills = $scope.categoryList[ $scope.selectedCat ];
 				$scope.skills = Object.values($scope.categoryList[ $scope.selectedCat ]);
 				$scope.skills.unshift('All');
-				$scope.selectedSkill = $scope.skills[0];
+				$scope.selectedOptionSkill = $scope.skills[0];
 				break;
 			case 'skill': 
 				break;
@@ -59,27 +63,65 @@ angular.module('mySkills.report', ['ngRoute','firebase'])
 	};
 
 	var updateResult = function() {
-		if( $scope.selectedRate === 'All' && $scope.selectedSkill === 'All' ) {
-			$scope.labels = $scope.ratings.slice(1);
-			$scope.series = $scope.skills.slice(1);
-			/*$scope.data = [
-				[65, 59, 80, 45, 30],
-				[28, 48, 40, 19, 40]
-			] */
-			$scope.data = {};
-			for(var i in $scope.series) {
-				$scope.data[$scope.series[i]] = [0,0,0,0,0];
+		var labels = $scope.ratings.slice(1);
+		var skills = $scope.skills.slice(1);
+		var options = {
+			xAxis: {
+				categories: labels
+			},
+			yAxis: {
+				title: {
+					text: 'Count'
+				}
+			},
+			plotOptions : {
+				line: {
+					dataLabels: {
+						enabled: true
+					}
+				}
+			}
+		};
+		var series = {};
+		if( $scope.selectedRate === 'All' && $scope.selectedOptionSkill === 'All' ) {
+			for(var skillName in skills) {
+				series[skills[skillName]] = {
+					name: skills[skillName],
+					data: [0,0,0,0,0]
+				}
 			}
 			$scope.users.forEach((user)=>{
 				var selectedSkills = user.tech[$scope.selectedCat];
-				debugger;
 				for(var key in selectedSkills) {
-					$scope.data[key][selectedSkills[key]]++;
+					series[key].data[selectedSkills[key]]++;
 				}
 			});
-			$scope.data = Object.values($scope.data);
-			
+			options.series = Object.values(series);
 		}
+
+		if( $scope.selectedRate === 'All' && $scope.selectedOptionSkill !== 'All' ) {
+			var data = [0,0,0,0,0];
+			$scope.users.forEach((user)=>{
+				var selectedSkills = user.tech[$scope.selectedCat];
+				for(var key in selectedSkills) {
+					if(key === $scope.selectedOptionSkill ) {
+						data[selectedSkills[key]]++;
+					}
+					
+				}
+			});
+			options.series = [
+				{
+					name: $scope.selectedOptionSkill,
+					data: data
+				}
+			];
+		}
+		$scope.options = null;	
+		$timeout(() => {
+			$scope.options = options;
+		}, 10);
+		
 	};
 
 	ratings.$loaded().then(function(){
@@ -88,18 +130,22 @@ angular.module('mySkills.report', ['ngRoute','firebase'])
 		});
 		$scope.ratings.unshift('All');
 		$scope.selectedRate = $scope.ratings[0];
+		updateSkillsList();
 	});
 
-	$scope.options = [{
-		scales: {
-			yAxes: [{
-				ticks: {
-					stepSize: 1
-				}
-			}]
-		}
-	}];
+	
 }])
+.directive('skillsHighcharts', function(){
+	return {
+		restrict: 'A',
+		scope: {
+			options: '=',
+		},
+		link: function(scope, element) {
+			Highcharts.chart('container', scope.options);
+		}
+	}
+});
 /*
 .directive('materialSelect', function() {
 	return {
