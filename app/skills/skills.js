@@ -13,6 +13,9 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 .controller('SkillsCtrl', ['$scope','$firebaseArray', 'UserService', '$location',
  function($scope,$firebaseArray, UserService, $location) {
 	//init variable
+	$scope.showBtn = false;
+	$scope.userSkills = null;
+	$scope.feedData = false;
 	$scope.showMsg = false;
 	$scope.msg = null;
 	$scope.result = {};
@@ -33,6 +36,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 	$scope.hide = function(){
 		$scope.addFormShow = false;
 		$scope.showMsg = false;
+		$scope.newSkill = null;
 	};
 
 	//load user data 
@@ -40,6 +44,10 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		var key = appUtils.getEmailKey(UserService.user.email);
 		var data = $scope.users.$getRecord(key) || {};
 		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
+		if(data.tech){
+			$scope.showBtn = true;
+		}
+		
 	});
 	
 	$scope.updateSkills = function(result){
@@ -61,17 +69,19 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 			});
 		}
 		else{
-			console.log("update");
 			rootRef.child('Users/'+ key + '/tech/' + $scope.selectedCategory).set($scope.result).then(function(ref){
 				//hide form
 				$scope.addFormShow = false;
+				$scope.msg = "Your data updated successfully";
+				$scope.showMsg = true;
+				$scope.$apply();
 			});
 		}
-		$scope.msg = "your data updated successfully";
-		$scope.showMsg = true;
+		
 	};
 
 	$scope.selectedSkills = function(){
+		$scope.showMsg = false;
 		$scope.msg = null;
 		$scope.addFormShow = false;
 		$scope.skills = $firebaseArray(rootRef.child('categoryList').child($scope.selectedCategory));
@@ -79,6 +89,7 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		var key = appUtils.getEmailKey(UserService.user.email);
 		var data = $scope.users.$getRecord(key) || {};
 		$scope.result = data && data.tech && data.tech[$scope.selectedCategory] || {};
+
 	}
 
 	$scope.addNewSkill = function(){
@@ -88,5 +99,17 @@ angular.module('mySkills.skills', ['ngRoute','firebase'])
 		}
 		$scope.newSkill = null;
 	}
+
+	$scope.showReport = function(){
+		$scope.showMsg = false;
+		$scope.feedData = true;
+		var key = appUtils.getEmailKey(UserService.user.email);
+		var data = $scope.users.$getRecord(key) || {};
+		$scope.userSkills = data.tech;
+		$scope.ratings = $firebaseArray(rootRef.child('Rating'));
+		$scope.reportCategory = $scope.selectedCategory;
+	}
+
+
 
 }]);
